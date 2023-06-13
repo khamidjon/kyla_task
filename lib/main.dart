@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khamidjon_kyla/slidable_button.dart';
+import 'package:khamidjon_kyla/slidable_button_position.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,45 +37,44 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedCrossFade(
-        duration: const Duration(seconds: 1),
-        firstChild: InitialStateWidget(
-          changeState: _changeState,
+      body: Container(
+        color: _isInitialState ? Colors.blueAccent : Colors.white,
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewPadding.bottom + 16,
         ),
-        secondChild: FinalStateWidget(
-          changeState: _changeState,
-        ),
-        crossFadeState:
-            _isInitialState ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      ),
-    );
-  }
-
-  void _changeState() {
-    setState(() {
-      _isInitialState = !_isInitialState;
-    });
-  }
-}
-
-class InitialStateWidget extends StatelessWidget {
-  const InitialStateWidget({
-    required this.changeState,
-    super.key,
-  });
-
-  final VoidCallback changeState;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.blueAccent,
-      child: Center(
-        child: FloatingActionButton(
-          onPressed: changeState,
-          child: const Icon(Icons.add),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Visibility(
+              visible: !_isInitialState,
+              maintainState: true,
+              maintainAnimation: true,
+              maintainSize: true,
+              child: const Align(
+                alignment: Alignment.bottomCenter,
+                child: FinalStateWidget(),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: VerticalSlidableButton(
+                height: MediaQuery.of(context).size.height / 3,
+                width: 48,
+                buttonHeight: 48.0,
+                buttonColor: _isInitialState ? Colors.white : Colors.blueAccent,
+                label: Icon(
+                  Icons.close,
+                  color: _isInitialState ? Colors.blueAccent : Colors.white,
+                ),
+                completeSlideAt: _isInitialState ? 0.0 : 1.0,
+                onChanged: (position) {
+                  setState(() {
+                    _isInitialState = position == SlidableButtonPosition.start;
+                  });
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -82,52 +83,36 @@ class InitialStateWidget extends StatelessWidget {
 
 class FinalStateWidget extends StatelessWidget {
   const FinalStateWidget({
-    required this.changeState,
     super.key,
   });
 
-  final VoidCallback changeState;
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 24.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.home),
-                color: Colors.deepPurpleAccent,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-                color: Colors.deepPurpleAccent,
-              ),
-              FloatingActionButton(
-                onPressed: changeState,
-                child: const Icon(Icons.add),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.flash_on),
-                color: Colors.deepPurpleAccent,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                color: Colors.deepPurpleAccent,
-              ),
-            ],
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.home),
+          color: Colors.deepPurpleAccent,
         ),
-      ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.search),
+          color: Colors.deepPurpleAccent,
+        ),
+        const SizedBox(width: 24),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.flash_on),
+          color: Colors.deepPurpleAccent,
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.person),
+          color: Colors.deepPurpleAccent,
+        ),
+      ],
     );
   }
 }
