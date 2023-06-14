@@ -1,16 +1,11 @@
 # khamidjon_kyla
 
-A new Flutter project.
+Flutter project, contains button in the middle of the screen,
+where screen reacts to its position change.
 
-## Getting Started
+Done with the help of package [slidable_button](https://pub.dev/packages/slidable_button)
 
-This project is a starting point for a Flutter application.
+Project uses Dart 3.
+No special instructions to run the application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+You can see the final result [here](https://drive.google.com/file/d/1mOb0jIWAQQPTpwLAkFtxkP7fn7TD8e3W/view?usp=sharing)

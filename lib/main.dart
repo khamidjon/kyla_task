@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:khamidjon_kyla/slidable_button.dart';
-import 'package:khamidjon_kyla/slidable_button_position.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,15 +16,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -52,21 +49,17 @@ class _MyHomePageState extends State<MyHomePage> {
               maintainSize: true,
               child: const Align(
                 alignment: Alignment.bottomCenter,
-                child: FinalStateWidget(),
+                child: BottomNavigationWidget(),
               ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
               child: VerticalSlidableButton(
-                height: MediaQuery.of(context).size.height / 3,
-                width: 48,
-                buttonHeight: 48.0,
                 buttonColor: _isInitialState ? Colors.white : Colors.blueAccent,
-                label: Icon(
+                icon: Icon(
                   Icons.close,
                   color: _isInitialState ? Colors.blueAccent : Colors.white,
                 ),
-                completeSlideAt: _isInitialState ? 0.0 : 1.0,
                 onChanged: (position) {
                   setState(() {
                     _isInitialState = position == SlidableButtonPosition.start;
@@ -81,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class FinalStateWidget extends StatelessWidget {
-  const FinalStateWidget({
+class BottomNavigationWidget extends StatelessWidget {
+  const BottomNavigationWidget({
     super.key,
   });
 
@@ -101,7 +94,7 @@ class FinalStateWidget extends StatelessWidget {
           icon: const Icon(Icons.search),
           color: Colors.deepPurpleAccent,
         ),
-        const SizedBox(width: 24),
+        const SizedBox(width: 32),
         IconButton(
           onPressed: () {},
           icon: const Icon(Icons.flash_on),
